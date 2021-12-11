@@ -1,7 +1,7 @@
 # Приложение по БД
 
 ### Установка
-1. Добавь и выполни следующий запрос для создания таблицы пользователей в своей БД.
+1. Добавление и выполнение запросов для создания таблицы пользователей в своей БД.
 ```sql
 CREATE TABLE IF NOT EXISTS Users
 (
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Users
 INSERT INTO Users VALUES(0, 'admin1', 'admin@admin', 'password', 'admin');
 INSERT INTO Users VALUES(0, 'user1', 'user@user', 'password', 'user');
 ```
-2. Отредактируй конфигурационный файл ```config.py``` в соответствии 
+2. Редактирование конфигурационного файла ```config.py``` в соответствии 
    со своими данными для подключения к БД.
 ```python
 # DB config
@@ -33,4 +33,8 @@ root_table = 'Client'  # Table
 white_listed_tables = ['users']  # Hide tables from user group
 
 ```
-3. Запусти ```app.py``` из корня проекта.
+3. Установка зависимостей и запуск проекта.
+```python
+pip install -r requirements.txt
+py app.py
+```
