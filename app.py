@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_mysqldb import MySQL
 import os
+import re
 import config
 
 app = Flask(__name__)
@@ -20,7 +21,7 @@ mysql = MySQL(app)
 data = None
 headings = None
 tables = None
-privilege = 0  # 0 - unauthorized, 1 - authorized, 2 - admin
+privilege = 2  # 0 - unauthorized, 1 - authorized, 2 - admin
 
 
 @app.route('/favicon.ico')
@@ -115,6 +116,7 @@ def logout():
 
 @app.route('/<table>', methods=['GET', 'POST'])
 def index(table):
+    # error = request.args.get('error')
     if table == "register":
         redirect(url_for('register'))
     elif table == "login":
@@ -236,16 +238,41 @@ def update(table, id, field_value):
         return redirect(url_for('index', table=table))
 
 
-@app.route('/filter/<table>/<column>/<_from>/<_to>', methods=['GET', 'POST'])
-def filter(table, column, _from, _to):
+@app.route('/filter/<table>/<column>', methods=['GET', 'POST'])
+def filter(table, column):
+    global data
+    type = None
     if privilege == 0:
         return render_template('auth.html', auth_mode=1, valid_res='Please log in first')
-    query = f"SELECT * FROM {table} WHERE {column} BETWEEN {_from} AND {_to}"
-    cur = mysql.connection.cursor()
-    cur.execute(query)
-    mysql.connection.commit()
-    cur.close()
-    return redirect(url_for('index', table=table))
+
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"DESCRIBE {table}")
+    type = dict([(item['Field'], item['Type']) for item in cursor.fetchall() if item['Field'] == column])
+    type = re.sub(r'[^a-zA-Z ]+', '', type[column])
+
+    if request.method == "POST":
+        pattern = request.form['pattern']
+        try:
+            if type == 'decimal' or type == 'int':
+                query = f"SELECT * FROM {table} WHERE {column} {pattern}"
+                cursor.execute(query)
+                print(query)
+            elif type == 'char':
+                query = f"SELECT * FROM {table} WHERE {column} LIKE '{pattern}'"
+                cursor.execute(query)
+                print(query)
+            data = cursor.fetchall()
+            mysql.connection.commit()
+            cursor.close()
+
+        except Exception as error:
+            print(error)
+            return redirect(url_for('index', table=table))
+
+    return render_template('tables.html', headings=headings, data=data, table=table, tables=tables,
+                           column=column, privilege=privilege, db_tables=db_tables, white_list=white_list,
+                           type=type, filter=True)
+
 
 
 @app.route('/sort/<table>/<column>/<order>', methods=['GET', 'POST'])
@@ -265,7 +292,8 @@ def sort(table, column, order):
         return redirect(url_for('index', table=table))
     mysql.connection.commit()
     cur.close()
-    return render_template('tables.html', headings=headings, data=data, table=table, tables=tables, privilege=privilege)
+    return render_template('tables.html', headings=headings, data=data, table=table, column=column,
+                           tables=tables, privilege=privilege, db_tables=db_tables, white_list=white_list)
 
 
 if __name__ == '__main__':

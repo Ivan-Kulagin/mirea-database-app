@@ -5,6 +5,7 @@
         <tr>
             {% for header in headings %}
             <th>
+                <a href="/filter/{{ table }}/{{ header }}" class="text-secondary text-decoration- mr-2"><i class="fas fa-filter"></i></a>
                 <a href="/sort/{{ table }}/{{ header }}/desc" class="text-secondary text-decoration-none"><i class="fas fa-arrow-up"></i></a>
                 <a href="/sort/{{ table }}/{{ header }}/asc" class="text-secondary text-decoration-none"><i class="fas fa-arrow-down mr-2"></i></a>
                 {{ header }}
@@ -34,4 +35,7 @@
         </tr>
         {% endfor %}
     </table>
+<!--    {% if error == None %}
+    <span class="nav-link bg-info text-white rounded font-weight-bold small w-auto">{{ error }}</span>
+    {% endif %}-->
 {% endblock %}

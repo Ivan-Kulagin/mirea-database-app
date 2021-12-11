@@ -1,4 +1,4 @@
-<div class="display-4 d-inline p-2 bg-warning text-dark" style="text-transform: capitalize; font-size: 26px; font-weight: 500;">Table: {{ table }} </div>
+<div class="display-4 d-inline p-1 bg-warning text-dark rounded" style="text-transform: capitalize; font-size: 24px; font-weight: 500;">Table: {{ table }} </div>
 {% if row is defined and privilege > 1 %}
 <form method="post" action="/update/{{ table }}/{{ id }}/{{ field_value }}">
     <div class="input-group mb-3 mt-3">
@@ -15,12 +15,33 @@
         <a href="/{{ table }}" class="btn btn-secondary input-group-append ml-2">Undo</a>
     </div>
 </form>
+
+{% elif filter %}
+<form action="/filter/{{ table }}/{{ column }}" method="POST">
+    <div class="input-group mb-3 mt-3">
+        <div class="input-group-append mr-2">
+            <input type="text" name="pattern" class="form-control" style="width: 300px" placeholder="Enter filter for {{ column }}" required/>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Filter"/>
+        <a href="/{{ table }}" class="btn btn-secondary input-group-append ml-2">Undo</a>
+        {% if type == 'decimal' or type == 'int' %}
+        <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use compare operators (<, >, ==, >=, <=, !=) or BETWEEN expression to filter data</span>
+        {% elif type == 'char' %}
+        <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use LIKE expressions ('%', '_') to filter data</span>
+        {% endif %}
+    </div>
+</form>
+
 {% elif privilege > 1 %}
 <form method="post" action="/{{ table }}">
     <div class="input-group mb-3 mt-3">
         {% for header in headings %}
         <div class="input-group-append mr-2">
-         <input type="text" name="{{ header }}" class="form-control" placeholder="{{ header }}" required/>
+        {% if header != headings[0] %}
+        <input type="text" name="{{ header }}" class="form-control" placeholder="{{ header }}" required/>
+        {% else %}
+        <input type="text" name="{{ header }}" class="form-control" placeholder="{{ header }}"/>
+        {% endif %}
         </div>
         {% endfor %}
         <input type="submit" class="btn btn-primary" value="Insert"/>
