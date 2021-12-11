@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css">
+    <title>Auth Page</title>
+</head>
+<body class="text-center">
+    <div style="  position: fixed;
+                  top: 40%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  width: 500px;"
+    >
+        <h2 class="mb-3">
+            {% if auth_mode == 0 %}
+            SIGN UP
+            {% else %}
+            SIGN IN
+            {% endif %}
+        </h2>
+        <form class="text-left font-weight-bold" method="POST"
+              {% if auth_mode == 0 %}
+                action="/register"
+              {% else %}
+                action="/login"
+              {% endif %}>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username">
+            </div>
+            {% if auth_mode == 0 %}
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email">
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your password">
+            </div>
+            <div class="btn-group w-100">
+                {% if auth_mode == 1 %}
+                <button type="submit" class="btn btn-primary font-weight-bold w-75">Login</button>
+                <a href="/register" class="btn btn-outline-secondary w-25">Register</a>
+                {% elif auth_mode == 0 %}
+                <button type="submit" class="btn btn-primary font-weight-bold w-75">Register</button>
+                <a href="/login" class="btn btn-outline-secondary w-25">Login</a>
+                {% endif %}
+            </div>
+        </form>
+        {% if valid_res is defined %}
+        <div class="text-left mt-2">
+            <span class="badge bg-warning text-wrap font-weight-bold w-100" style="font-size: 20px; color: #333;">{{ valid_res }}</span>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

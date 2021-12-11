@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <meta charset="UTF-8">
+
+    <title></title>
+</head>
+
+<body class="mx-3">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand font-weight-bold" href="/">Keyboards Database</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          {% for item in tables %}
+            {% if table == item[db_tables] %}
+              <li class="nav-item active">
+            {% else %}
+              <li class="nav-item">
+            {% endif %}
+              {% if privilege == 2 and item[db_tables] in white_list %}
+                <a class="nav-link text-danger font-weight-bold" href="/{{ item[db_tables] }}">{{ item[db_tables] }}</a>
+              {% elif privilege < 2 and item[db_tables] in white_list %}
+              {% else %}
+                <a class="nav-link text-success" href="/{{ item[db_tables] }}">{{ item[db_tables] }}</a>
+              {% endif %}
+              </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="justify-content-right d-flex">
+
+          {% if privilege == 2 %}
+           <span class="nav-link bg-danger text-white"> Logged as admin
+          {% elif privilege == 1 %}
+           <span class="nav-link bg-success text-white"> Logged as user
+          {% endif %}
+          </span>
+          <a class="nav-link btn btn-outline-primary font-weight-bold ml-2" href="/logout">Logout</a>
+      </div>
+    </nav>
+
+    {% include "form.html" %}
+    {% block content %}
+        Tables not found
+    {% endblock %}
+
+    {% if traceback is not none %}
+        {{ traceback }}
+    {% endif %}
+</body>
+</html>
