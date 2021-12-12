@@ -253,11 +253,11 @@ def filter(table, column):
     if request.method == "POST":
         pattern = request.form['pattern']
         try:
-            if type == 'decimal' or type == 'int':
+            if type == 'decimal' or type == 'int' or type == 'datetime' or type == 'date':
                 query = f"SELECT * FROM {table} WHERE {column} {pattern}"
                 cursor.execute(query)
                 print(query)
-            elif type == 'char':
+            elif type == 'char' or type == 'varchar':
                 query = f"SELECT * FROM {table} WHERE {column} LIKE '{pattern}'"
                 cursor.execute(query)
                 print(query)

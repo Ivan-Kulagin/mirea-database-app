@@ -24,9 +24,9 @@
         </div>
         <input type="submit" class="btn btn-primary" value="Filter"/>
         <a href="/{{ table }}" class="btn btn-secondary input-group-append ml-2">Undo</a>
-        {% if type == 'decimal' or type == 'int' %}
-        <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use compare operators (<, >, ==, >=, <=, !=) or BETWEEN expression to filter data</span>
-        {% elif type == 'char' %}
+        {% if type == 'decimal' or type == 'int' or type == 'datetime' or type == 'date' %}
+        <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use compare operators (<, >, ==, >=, <=, !=) or BETWEEN expression to filter data, use single quotes for DATETIME</span>
+        {% elif type == 'char' or type == 'varchar' %}
         <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use LIKE expressions ('%', '_') to filter data</span>
         {% endif %}
     </div>
