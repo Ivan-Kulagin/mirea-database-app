@@ -21,7 +21,7 @@ mysql = MySQL(app)
 data = None
 headings = None
 tables = None
-privilege = 2  # 0 - unauthorized, 1 - authorized, 2 - admin
+privilege = 0  # 0 - unauthorized, 1 - authorized, 2 - admin
 
 
 @app.route('/favicon.ico')
