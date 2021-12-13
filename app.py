@@ -258,7 +258,7 @@ def filter(table, column):
                 cursor.execute(query)
                 print(query)
             elif type == 'char' or type == 'varchar':
-                query = f"SELECT * FROM {table} WHERE {column} LIKE '{pattern}'"
+                query = f"SELECT * FROM {table} WHERE {column} LIKE '%{pattern}%'"
                 cursor.execute(query)
                 print(query)
             data = cursor.fetchall()

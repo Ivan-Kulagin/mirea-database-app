@@ -27,7 +27,8 @@
         {% if type == 'decimal' or type == 'int' or type == 'datetime' or type == 'date' %}
         <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use compare operators (<, >, ==, >=, <=, !=) or BETWEEN expression to filter data, use single quotes for DATETIME</span>
         {% elif type == 'char' or type == 'varchar' %}
-        <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">You can use LIKE expressions ('%', '_') to filter data</span>
+        <span class="nav-link bg-info text-white ml-2 rounded font-weight-bold small">Enter a piece of text to filter data</span>
+            <!--You can use LIKE expressions ('%', '_') to filter data-->
         {% endif %}
     </div>
 </form>
