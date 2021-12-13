@@ -296,5 +296,22 @@ def sort(table, column, order):
                            tables=tables, privilege=privilege, db_tables=db_tables, white_list=white_list)
 
 
+@app.route('/SupplyRequests/func', methods=['GET', 'POST'])
+def func():
+    if request.method == "GET":
+        return render_template('tables.html', headings=headings, data=data, table='SupplyRequests', isFunc=True,
+                           tables=tables, privilege=privilege, db_tables=db_tables, white_list=white_list)
+    if request.method == "POST":
+        id = request.form['id']
+
+        cursor = mysql.connection.cursor()
+        query = f'SELECT GetOrderPrice({id}) as OrderTotal'
+        cursor.execute(query)
+        fetched_data = cursor.fetchone()['OrderTotal']
+        mysql.connection.commit()
+        cursor.close()
+        return render_template('tables.html', headings=headings, data=data, table='SupplyRequests', privilege=privilege,
+                               tables=tables, fetched_data=fetched_data, db_tables=db_tables, white_list=white_list)
+
 if __name__ == '__main__':
     app.run(debug=True)
