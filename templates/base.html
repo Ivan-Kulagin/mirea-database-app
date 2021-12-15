@@ -12,7 +12,7 @@
 <body class="mx-3">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
-      <a class="navbar-brand font-weight-bold" href="/">Keyboards Database</a>
+      <a class="navbar-brand font-weight-bold" href="/">База данных клавиатур</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -37,12 +37,12 @@
       <div class="justify-content-right d-flex">
 
           {% if privilege == 2 %}
-           <span class="nav-link bg-danger text-white"> Logged as admin
+           <span class="nav-link bg-danger text-white"> Администратор
           {% elif privilege == 1 %}
-           <span class="nav-link bg-success text-white"> Logged as user
+           <span class="nav-link bg-success text-white"> Пользователь
           {% endif %}
           </span>
-          <a class="nav-link btn btn-outline-primary font-weight-bold ml-2" href="/logout">Logout</a>
+          <a class="nav-link btn btn-outline-primary font-weight-bold ml-2" href="/logout">Выход</a>
       </div>
     </nav>
 

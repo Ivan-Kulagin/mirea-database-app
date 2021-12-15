@@ -14,9 +14,9 @@
     >
         <h2 class="mb-3">
             {% if auth_mode == 0 %}
-            SIGN UP
+            РЕГИСТРАЦИЯ
             {% else %}
-            SIGN IN
+            ВХОД
             {% endif %}
         </h2>
         <form class="text-left font-weight-bold" method="POST"
@@ -26,26 +26,26 @@
                 action="/login"
               {% endif %}>
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username">
+                <label for="username">Имя пользователя</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Введите имя пользователя">
             </div>
             {% if auth_mode == 0 %}
             <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email">
+                <label for="email">Email-адрес</label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="Введите email">
             </div>
             {% endif %}
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your password">
+                <label for="password">Пароль</label>
+                <input type="password" name="password" id="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">
             </div>
             <div class="btn-group w-100">
                 {% if auth_mode == 1 %}
-                <button type="submit" class="btn btn-primary font-weight-bold w-75">Login</button>
-                <a href="/register" class="btn btn-outline-secondary w-25">Register</a>
+                <button type="submit" class="btn btn-primary font-weight-bold w-75">Войти</button>
+                <a href="/register" class="btn btn-outline-secondary w-25">Регистрация</a>
                 {% elif auth_mode == 0 %}
-                <button type="submit" class="btn btn-primary font-weight-bold w-75">Register</button>
-                <a href="/login" class="btn btn-outline-secondary w-25">Login</a>
+                <button type="submit" class="btn btn-primary font-weight-bold w-75">Зарегистрироваться</button>
+                <a href="/login" class="btn btn-outline-secondary w-25">Вход</a>
                 {% endif %}
             </div>
         </form>

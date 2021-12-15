@@ -296,21 +296,21 @@ def sort(table, column, order):
                            tables=tables, privilege=privilege, db_tables=db_tables, white_list=white_list)
 
 
-@app.route('/SupplyRequests/func', methods=['GET', 'POST'])
+@app.route('/Keyboard/func', methods=['GET', 'POST'])
 def func():
     if request.method == "GET":
-        return render_template('tables.html', headings=headings, data=data, table='SupplyRequests', isFunc=True,
+        return render_template('tables.html', headings=headings, data=data, table='Keyboard', isFunc=True,
                            tables=tables, privilege=privilege, db_tables=db_tables, white_list=white_list)
     if request.method == "POST":
         id = request.form['id']
 
         cursor = mysql.connection.cursor()
-        query = f'SELECT GetOrderPrice({id}) as OrderTotal'
+        query = f'SELECT GetKeyboardPrice({id}) as KeyboardPrice'
         cursor.execute(query)
-        fetched_data = cursor.fetchone()['OrderTotal']
+        fetched_data = cursor.fetchone()['KeyboardPrice']
         mysql.connection.commit()
         cursor.close()
-        return render_template('tables.html', headings=headings, data=data, table='SupplyRequests', privilege=privilege,
+        return render_template('tables.html', headings=headings, data=data, table='Keyboard', privilege=privilege,
                                tables=tables, fetched_data=fetched_data, db_tables=db_tables, white_list=white_list)
 
 
