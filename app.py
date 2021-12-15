@@ -313,5 +313,6 @@ def func():
         return render_template('tables.html', headings=headings, data=data, table='SupplyRequests', privilege=privilege,
                                tables=tables, fetched_data=fetched_data, db_tables=db_tables, white_list=white_list)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
